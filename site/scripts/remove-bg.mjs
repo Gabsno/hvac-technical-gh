@@ -50,14 +50,20 @@ async function run() {
     }
   }
 
-  await sharp(data, { raw: { width, height, channels: 4 } })
+  // Trim transparent padding so the bounding box hugs the visible logo
+  const trimmed = await sharp(data, { raw: { width, height, channels: 4 } })
+    .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 5 })
     .png({ compressionLevel: 9 })
-    .toFile(outPath);
+    .toBuffer({ resolveWithObject: true });
+
+  await sharp(trimmed.data).toFile(outPath);
 
   const totalPixels = width * height;
   const pctCleared = ((cleared / totalPixels) * 100).toFixed(1);
+  const newW = trimmed.info.width;
+  const newH = trimmed.info.height;
   console.log(
-    `Wrote ${outPath} — ${width}×${height}, ${pctCleared}% of pixels made fully transparent`,
+    `Wrote ${outPath}\n  • input  : ${width}×${height}\n  • trimmed: ${newW}×${newH} (aspect ${(newW / newH).toFixed(2)}:1)\n  • ${pctCleared}% of pixels made fully transparent (before trim)`,
   );
 }
 

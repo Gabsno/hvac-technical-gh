@@ -8,6 +8,9 @@ type Props = {
   size?: "default" | "lg";
 };
 
+// Logo aspect ratio (trimmed PNG): 1205 × 385 ≈ 3.13 : 1
+//   → for any given height H, width = H * 3.13
+
 export function Logo({
   className,
   variant = "default",
@@ -22,12 +25,13 @@ export function Logo({
     >
       <span
         className={cn(
-          "relative inline-block",
+          "relative inline-block shrink-0",
+          // Default = navbar use
+          // mobile h-14 (56px) → w ~175px
+          // desktop h-[72px] → w ~225px
           size === "lg"
-            ? "h-14 w-[210px] sm:h-16 sm:w-[240px]"
-            : "h-12 w-[180px] sm:h-14 sm:w-[210px]",
-          // In dark mode the navy ink disappears on dark navy bg — invert to white.
-          // In light variant (e.g. dark footer), always invert to pure white.
+            ? "h-16 w-[200px] sm:h-20 sm:w-[250px]"
+            : "h-14 w-[175px] sm:h-[68px] sm:w-[213px]",
           isLight
             ? "[filter:brightness(0)_invert(1)]"
             : "dark:[filter:brightness(0)_invert(1)]",
@@ -39,7 +43,7 @@ export function Logo({
           fill
           className="object-contain object-left"
           priority
-          sizes="240px"
+          sizes="250px"
         />
       </span>
     </Link>
