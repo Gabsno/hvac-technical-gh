@@ -1,0 +1,236 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ──────────────────────────────────────────────────────────
+   Design tokens — derived from the real wordmark
+   Navy + Orange + White + Steel-gray
+   B2B corporate HVAC/MEP. Carrier / Schneider register.
+   ────────────────────────────────────────────────────────── */
+:root {
+  --bg: #ffffff;
+  --bg-subtle: #f5f6f8;
+  --bg-elevated: #ffffff;
+  --ink: #0c1626;
+  --ink-soft: #2a3a52;
+  --muted: #5b6678;
+  --subtle: #8b94a3;
+  --line: #e3e6eb;
+  --line-strong: #c9ced6;
+
+  /* Brand */
+  --navy: #1e4976;
+  --navy-deep: #0f2c4a;
+  --navy-darker: #08182b;
+  --navy-tint: #cfdcea;
+  --steel: #7393b3;
+  --steel-tint: #d7e0ea;
+
+  /* Accent */
+  --orange: #ef8324;
+  --orange-deep: #c96914;
+  --orange-soft: #ffd7b3;
+
+  /* Status */
+  --signal: var(--orange);
+}
+
+.dark {
+  --bg: #050d18;
+  --bg-subtle: #0a1626;
+  --bg-elevated: #0e1d30;
+  --ink: #f1f4f8;
+  --ink-soft: #c9d2dd;
+  --muted: #93a0b1;
+  --subtle: #6b7787;
+  --line: #1a2a40;
+  --line-strong: #2a3e58;
+
+  --navy: #4f7fb8;
+  --navy-deep: #1e4976;
+  --navy-darker: #0f2c4a;
+  --navy-tint: #1a2c44;
+  --steel: #94aac4;
+  --steel-tint: #1f2e45;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-darker: var(--navy-darker);
+  --color-navy-tint: var(--navy-tint);
+  --color-steel: var(--steel);
+  --color-steel-tint: var(--steel-tint);
+  --color-orange: var(--orange);
+  --color-orange-deep: var(--orange-deep);
+  --color-orange-soft: var(--orange-soft);
+  --color-signal: var(--orange);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-feature-settings: "cv11", "ss01", "ss03";
+  font-variant-numeric: tabular-nums;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: var(--navy);
+  color: #ffffff;
+}
+
+/* Display type — disciplined geometric sans, NEVER serif */
+.font-display {
+  font-family: var(--font-display), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+.font-mono {
+  font-family: var(--font-mono), Menlo, monospace;
+}
+
+/* Editorial eyebrow */
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 8px;
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--navy); }
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 50s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+.pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }
+
+/* Reveal */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  animation: fadeUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+/* Photo overlays (consistent darkening on hero photography) */
+.photo-overlay {
+  position: relative;
+}
+.photo-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 24, 43, 0.55) 0%,
+    rgba(8, 24, 43, 0.35) 40%,
+    rgba(8, 24, 43, 0.85) 100%
+  );
+}
+
+.photo-overlay-side::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(8, 24, 43, 0.92) 0%,
+    rgba(8, 24, 43, 0.7) 45%,
+    rgba(8, 24, 43, 0.3) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track { animation: none !important; }
+}
+
+/* Focus */
+*:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+/* Hairline rule */
+.rule {
+  height: 1px;
+  background: var(--line);
+  width: 100%;
+}
+
+/* Card hover */
+.card-hover {
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  border-color: var(--navy);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -22px rgba(15, 44, 74, 0.35);
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: clip; }

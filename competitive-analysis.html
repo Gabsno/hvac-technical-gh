@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HVAC Technical GH — Competitive Analysis Report</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f6f4f0;
+            --accent: #c45d3e;
+            --accent-light: #e8a48e;
+            --muted: #8a8580;
+            --divider: #d6d2cc;
+            --card: #fffefa;
+            --shadow: rgba(10, 10, 10, 0.06);
+            --teal: #0f4c5c;
+            --steel: #1b2a41;
+            --signal: #f26419;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Cover */
+        header.cover {
+            padding: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        header.cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--accent));
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--accent-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.3s;
+        }
+
+        h1.cover-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.5s;
+        }
+
+        h1.cover-title em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .cover-subtitle {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 540px;
+            margin: 0 auto;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.7s;
+        }
+
+        .cover-meta {
+            margin-top: 4rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.9s;
+        }
+
+        .cover-meta span strong {
+            display: block;
+            color: var(--ink);
+            font-size: 1rem;
+            text-transform: none;
+            letter-spacing: 0;
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+
+        /* Divider */
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            margin: 4rem auto;
+        }
+
+        /* Section heading */
+        .section {
+            padding: 3rem 0;
+        }
+
+        .section-eyebrow {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .section h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+        }
+
+        .section h2 em { color: var(--accent); font-style: italic; }
+
+        .section p {
+            color: #3a3835;
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+            max-width: 720px;
+        }
+
+        /* Card */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--divider);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 40px var(--shadow);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-light));
+            border-radius: 4px 0 0 4px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .card-rank {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3rem;
+            color: var(--accent);
+            line-height: 1;
+            opacity: 0.35;
+        }
+
+        .card-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.7rem;
+            font-weight: 400;
+            line-height: 1.1;
+            flex: 1;
+        }
+
+        .card-score {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            color: var(--ink);
+        }
+
+        .card-score small {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .positioning {
+            font-style: italic;
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 2px solid var(--accent-light);
+        }
+
+        .swatches {
+            display: flex;
+            gap: 0.6rem;
+            margin: 1rem 0 1.25rem;
+        }
+
+        .swatch {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--divider);
+            position: relative;
+        }
+
+        .swatch::after {
+            content: attr(data-hex);
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            color: var(--muted);
+            margin-top: 0.4rem;
+            white-space: nowrap;
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .insight {
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        .insight strong {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .insight ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .insight ul li {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .insight ul li::before {
+            content: '—';
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .score-bars {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.4rem 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.78rem;
+        }
+
+        .score-bar-row {
+            display: contents;
+        }
+
+        .score-bar-label {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .score-bar-track {
+            position: relative;
+            background: var(--paper);
+            border-radius: 2px;
+            height: 8px;
+            margin-top: 0.45rem;
+        }
+
+        .score-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(to right, var(--accent), var(--accent-light));
+            border-radius: 2px;
+        }
+
+        .score-bar-value {
+            color: var(--ink);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        /* Comparison table */
+        .table-wrap {
+            overflow-x: auto;
+            margin: 2rem 0;
+            background: var(--card);
+            border: 1px solid var(--divider);
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th, td {
+            padding: 0.9rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        th {
+            background: var(--paper);
+            font-weight: 500;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        td.score-cell {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.05rem;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        td.total-cell {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.2rem;
+            color: var(--ink);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        tr.client-row {
+            background: linear-gradient(135deg, #fdf6f3, #fef9f6);
+        }
+
+        /* Pattern callouts */
+        .pattern {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-bottom: 1px dashed var(--divider);
+        }
+
+        .pattern:last-child { border-bottom: none; }
+
+        .pattern-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3.5rem;
+            color: var(--accent);
+            line-height: 0.9;
+            opacity: 0.5;
+        }
+
+        .pattern h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .pattern p {
+            color: #3a3835;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Tag */
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.25rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.85rem;
+            border-radius: 100px;
+            background: var(--paper);
+            border: 1px solid var(--divider);
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* Recommendation callout */
+        .recommend {
+            background: linear-gradient(135deg, #fdf6f3, #fef9f6);
+            border: 1px dashed var(--accent-light);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .recommend strong {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .recommend h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Flow connector */
+        .flow-connector {
+            display: flex;
+            justify-content: center;
+            padding: 0.5rem 0;
+        }
+
+        .flow-connector svg {
+            color: var(--divider);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0 4rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--divider);
+        }
+
+        footer p {
+            font-size: 0.75rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            header.cover { padding: 4rem 0 3rem; min-height: auto; }
+            .card { padding: 1.75rem; }
+            .card-rank { font-size: 2.2rem; }
+            .card-title { font-size: 1.3rem; }
+            .insight-grid { grid-template-columns: 1fr; }
+            .pattern { grid-template-columns: 1fr; gap: 0.5rem; }
+            .cover-meta { flex-direction: column; gap: 1.5rem; }
+            .container { padding: 0 1.25rem; }
+        }
+
+        /* Print */
+        @media print {
+            body::after { display: none; }
+            .card, .pattern, .recommend { break-inside: avoid; box-shadow: none; }
+            header.cover { break-after: page; min-height: auto; }
+            .section { break-inside: avoid-page; }
+            .badge, h1, .cover-subtitle, .cover-meta { opacity: 1 !important; animation: none !important; }
+            body { background: white; }
+            .card, .recommend, .table-wrap { background: white; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- COVER -->
+    <header class="cover">
+        <span class="badge">Competitive Analysis Report</span>
+        <h1 class="cover-title">Where HVAC Technical GH<br>stands in the <em>Ghana market</em></h1>
+        <p class="cover-subtitle">A research-driven audit of the eight strongest HVAC operators in Accra — scored across eight criteria, with the patterns that separate the top 10% from the rest.</p>
+        <div class="cover-meta">
+            <span>Prepared for<strong>HVAC Technical GH</strong></span>
+            <span>Date<strong>May 2026</strong></span>
+            <span>Status<strong>Pre-build</strong></span>
+        </div>
+    </header>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <section class="section">
+        <p class="section-eyebrow">Executive Summary</p>
+        <h2>The technical skill is <em>already there</em>. The website is not.</h2>
+        <p>HVAC Technical GH has roughly a decade of installation, maintenance and design experience across restaurants, manufacturing, offices, apartments and retail. That puts the company on the same engineering footing as Prestige HVAC (20 years) and Ideal Air Services (8 years, award-winning).</p>
+        <p>The gap is online presence. Across the eight-criteria scoring model — search visibility, review quality, visual design, mobile responsiveness, content depth, social proof, CTA strategy and page speed — the current site scores <strong>22 / 80</strong>, well below the bottom of the competitive set (Electricons, 38). The top operator, Fox Cooling, scores <strong>72 / 80</strong>.</p>
+        <p>This report identifies five concrete patterns shared by every winning site in the Ghana market, and recommends a build direction that closes the gap within one release cycle.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- COMPETITOR PROFILES -->
+    <section class="section">
+        <p class="section-eyebrow">Competitor Profiles</p>
+        <h2>The top five operators, <em>side by side</em></h2>
+        <p>Each competitor was deep-scraped for visual identity, content strategy, site architecture, and conversion strategy.</p>
+
+        <!-- Fox Cooling -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-rank">01</span>
+                <h3 class="card-title">Fox Cooling Co. Ltd</h3>
+                <span class="card-score">72<small> / 80</small></span>
+            </div>
+            <p class="positioning">"The best MEP Contractor in Africa"</p>
+
+            <div class="swatches">
+                <span class="swatch" style="background:#c0252e;" data-hex="#C0252E"></span>
+                <span class="swatch" style="background:#0a0a0a;" data-hex="#0A0A0A"></span>
+                <span class="swatch" style="background:#ffffff;border:1px solid var(--divider);" data-hex="#FFFFFF"></span>
+                <span class="swatch" style="background:#8a8580;" data-hex="#8A8580"></span>
+            </div>
+
+            <div class="insight-grid">
+                <div class="insight">
+                    <strong>Strengths</strong>
+                    <ul>
+                        <li>Daikin official distributor — single-brand authority</li>
+                        <li>Marquee project list: Kotoka Airport, Google, Ecobank, Standard Chartered, Marriott Protea, ABSA HQ</li>
+                        <li>Multi-country footprint (Côte d'Ivoire, Cameroon, Benin, Senegal)</li>
+                        <li>~US$9.2M revenue (2025) signals scale</li>
+                    </ul>
+                </div>
+                <div class="insight">
+                    <strong>Weaknesses</strong>
+                    <ul>
+                        <li>Dated WordPress theme, weak typography</li>
+                        <li>Zero testimonials or named case studies</li>
+                        <li>Weak, generic CTAs</li>
+                        <li>No animation or scroll polish</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="score-bars">
+                <span class="score-bar-label">Search visibility</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Review quality</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Visual design</span><div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+                <span class="score-bar-label">Mobile responsive</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Content depth</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Social proof</span><div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div>
+                <span class="score-bar-label">CTA strategy</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Page speed</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Daikin Official</span>
+                <span class="tag">MEP Leader</span>
+                <span class="tag">Pan-African</span>
+            </div>
+        </div>
+
+        <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+        <!-- Ideal Air -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-rank">02</span>
+                <h3 class="card-title">Ideal Air Services Ghana</h3>
+                <span class="card-score">70<small> / 80</small></span>
+            </div>
+            <p class="positioning">"HVAC Masters — teamwork makes the dream work"</p>
+
+            <div class="swatches">
+                <span class="swatch" style="background:#1a5ea8;" data-hex="#1A5EA8"></span>
+                <span class="swatch" style="background:#163454;" data-hex="#163454"></span>
+                <span class="swatch" style="background:#f5f5f5;border:1px solid var(--divider);" data-hex="#F5F5F5"></span>
+                <span class="swatch" style="background:#ffd040;" data-hex="#FFD040"></span>
+            </div>
+
+            <div class="insight-grid">
+                <div class="insight">
+                    <strong>Strengths</strong>
+                    <ul>
+                        <li>"Award Winning HVAC Company 2024" — Ghana Industry CEO Awards</li>
+                        <li>Project list: Accra Mall, Coca-Cola plant, West Hills Mall, All African Games 2023 Stadium, KFC</li>
+                        <li>Seven service categories — broadest menu in the market</li>
+                        <li>Two emails (sales + HR), phone, full address visible</li>
+                    </ul>
+                </div>
+                <div class="insight">
+                    <strong>Weaknesses</strong>
+                    <ul>
+                        <li>Wix build — performance ceiling</li>
+                        <li>Generic stock-photo aesthetic</li>
+                        <li>No motion design or scroll polish</li>
+                        <li>Visual language is stuck in 2019</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="score-bars">
+                <span class="score-bar-label">Search visibility</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Review quality</span><div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div>
+                <span class="score-bar-label">Visual design</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Mobile responsive</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Content depth</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Social proof</span><div class="score-bar-track"><div class="score-bar-fill" style="width:100%"></div></div>
+                <span class="score-bar-label">CTA strategy</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Page speed</span><div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Award Winning</span>
+                <span class="tag">Marquee Projects</span>
+                <span class="tag">Service Breadth</span>
+            </div>
+        </div>
+
+        <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+        <!-- Nesstra -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-rank">03</span>
+                <h3 class="card-title">Nesstra Ghana (Carrier dealer)</h3>
+                <span class="card-score">64<small> / 80</small></span>
+            </div>
+            <p class="positioning">"Global Comfort, Local Solutions"</p>
+
+            <div class="swatches">
+                <span class="swatch" style="background:#0f2c4a;" data-hex="#0F2C4A"></span>
+                <span class="swatch" style="background:#e84e1b;" data-hex="#E84E1B"></span>
+                <span class="swatch" style="background:#ffffff;border:1px solid var(--divider);" data-hex="#FFFFFF"></span>
+                <span class="swatch" style="background:#4a5a6a;" data-hex="#4A5A6A"></span>
+            </div>
+
+            <div class="insight-grid">
+                <div class="insight">
+                    <strong>Strengths</strong>
+                    <ul>
+                        <li>Official Carrier dealer — global brand backing</li>
+                        <li>Ghana + UK presence, multi-branch</li>
+                        <li>Mobile app on App Store & Google Play</li>
+                        <li>Industry-specific landing pages (mining, oil &amp; gas, data centers, F&amp;B)</li>
+                    </ul>
+                </div>
+                <div class="insight">
+                    <strong>Weaknesses</strong>
+                    <ul>
+                        <li>B2B-cold tone, no founder voice</li>
+                        <li>Dense, over-engineered navigation</li>
+                        <li>Little local Accra colour or specificity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="score-bars">
+                <span class="score-bar-label">Search visibility</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Review quality</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Visual design</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Mobile responsive</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Content depth</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Social proof</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">CTA strategy</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Page speed</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Carrier Official</span>
+                <span class="tag">Multi-country</span>
+                <span class="tag">Industry Pages</span>
+            </div>
+        </div>
+
+        <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+        <!-- Prestige -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-rank">04</span>
+                <h3 class="card-title">Prestige HVAC Ghana Ltd</h3>
+                <span class="card-score">58<small> / 80</small></span>
+            </div>
+            <p class="positioning">20 years, multi-brand reseller — "market leaders in the HVAC industry"</p>
+
+            <div class="swatches">
+                <span class="swatch" style="background:#0066b3;" data-hex="#0066B3"></span>
+                <span class="swatch" style="background:#222222;" data-hex="#222222"></span>
+                <span class="swatch" style="background:#ffffff;border:1px solid var(--divider);" data-hex="#FFFFFF"></span>
+                <span class="swatch" style="background:#a0a0a0;" data-hex="#A0A0A0"></span>
+            </div>
+
+            <div class="insight-grid">
+                <div class="insight">
+                    <strong>Strengths</strong>
+                    <ul>
+                        <li>Longest brand wall in the market: EuroBreez, Samsung, Jet Air, LG, Daikin, Midea, Carrier, York</li>
+                        <li>Heavy-hitting client list: ICT Park, 37 Military Hospital, Holiday Inn, University of Ghana, West Africa Gas Pipeline</li>
+                        <li>24-hour service dispatch promise</li>
+                    </ul>
+                </div>
+                <div class="insight">
+                    <strong>Weaknesses</strong>
+                    <ul>
+                        <li>Dated visual design — feels like 2015</li>
+                        <li>Generic stock photography</li>
+                        <li>Weak CTAs, no lead-capture flow</li>
+                        <li>No project case study depth</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="score-bars">
+                <span class="score-bar-label">Search visibility</span><div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+                <span class="score-bar-label">Review quality</span><div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+                <span class="score-bar-label">Visual design</span><div class="score-bar-track"><div class="score-bar-fill" style="width:60%"></div></div>
+                <span class="score-bar-label">Mobile responsive</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Content depth</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Social proof</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">CTA strategy</span><div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+                <span class="score-bar-label">Page speed</span><div class="score-bar-track"><div class="score-bar-fill" style="width:60%"></div></div>
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">8 Brand Partners</span>
+                <span class="tag">20 Years</span>
+                <span class="tag">24-hr Dispatch</span>
+            </div>
+        </div>
+
+        <div class="flow-connector"><svg width="2" height="24" viewBox="0 0 2 24" fill="none"><line x1="1" y1="0" x2="1" y2="24" stroke="currentColor" stroke-dasharray="3 3"/></svg></div>
+
+        <!-- CETECH -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-rank">05</span>
+                <h3 class="card-title">CETECH HVAC-R Ghana</h3>
+                <span class="card-score">52<small> / 80</small></span>
+            </div>
+            <p class="positioning">"HVAC Services in Ghana for Your Every Need" — education-led content</p>
+
+            <div class="swatches">
+                <span class="swatch" style="background:#003a70;" data-hex="#003A70"></span>
+                <span class="swatch" style="background:#ed1c24;" data-hex="#ED1C24"></span>
+                <span class="swatch" style="background:#ffffff;border:1px solid var(--divider);" data-hex="#FFFFFF"></span>
+                <span class="swatch" style="background:#666666;" data-hex="#666666"></span>
+            </div>
+
+            <div class="insight-grid">
+                <div class="insight">
+                    <strong>Strengths</strong>
+                    <ul>
+                        <li>Long-form educational content tailored to Ghana's climate</li>
+                        <li>Owns the explainer SEO niche (ductwork, air balancing, refrigeration)</li>
+                        <li>French parent, multi-discipline (mechanical, electrical, civil)</li>
+                    </ul>
+                </div>
+                <div class="insight">
+                    <strong>Weaknesses</strong>
+                    <ul>
+                        <li>No projects, no testimonials, no team page</li>
+                        <li>No credibility signals beyond word count</li>
+                        <li>Contact friction: no phone, no email on landing pages</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="score-bars">
+                <span class="score-bar-label">Search visibility</span><div class="score-bar-track"><div class="score-bar-fill" style="width:70%"></div></div>
+                <span class="score-bar-label">Review quality</span><div class="score-bar-track"><div class="score-bar-fill" style="width:60%"></div></div>
+                <span class="score-bar-label">Visual design</span><div class="score-bar-track"><div class="score-bar-fill" style="width:60%"></div></div>
+                <span class="score-bar-label">Mobile responsive</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Content depth</span><div class="score-bar-track"><div class="score-bar-fill" style="width:90%"></div></div>
+                <span class="score-bar-label">Social proof</span><div class="score-bar-track"><div class="score-bar-fill" style="width:40%"></div></div>
+                <span class="score-bar-label">CTA strategy</span><div class="score-bar-track"><div class="score-bar-fill" style="width:80%"></div></div>
+                <span class="score-bar-label">Page speed</span><div class="score-bar-track"><div class="score-bar-fill" style="width:60%"></div></div>
+            </div>
+
+            <div class="tag-row">
+                <span class="tag">Content SEO</span>
+                <span class="tag">Education-led</span>
+                <span class="tag">Multi-discipline</span>
+            </div>
+        </div>
+
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- COMPARISON TABLE -->
+    <section class="section">
+        <p class="section-eyebrow">Scorecard</p>
+        <h2>All competitors, <em>one table</em></h2>
+        <p>Eight criteria, scored 1–10 each, against the client.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Search</th>
+                        <th>Reviews</th>
+                        <th>Design</th>
+                        <th>Mobile</th>
+                        <th>Content</th>
+                        <th>Proof</th>
+                        <th>CTAs</th>
+                        <th>Speed</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Fox Cooling</strong></td>
+                        <td class="score-cell">9</td><td class="score-cell">9</td><td class="score-cell">7</td><td class="score-cell">9</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">8</td><td class="score-cell">9</td>
+                        <td class="total-cell">72</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ideal Air Services</strong></td>
+                        <td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">9</td><td class="score-cell">9</td><td class="score-cell">9</td><td class="score-cell">10</td><td class="score-cell">9</td><td class="score-cell">7</td>
+                        <td class="total-cell">70</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nesstra Ghana</strong></td>
+                        <td class="score-cell">8</td><td class="score-cell">8</td><td class="score-cell">8</td><td class="score-cell">9</td><td class="score-cell">9</td><td class="score-cell">8</td><td class="score-cell">8</td><td class="score-cell">8</td>
+                        <td class="total-cell">64</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prestige HVAC</strong></td>
+                        <td class="score-cell">7</td><td class="score-cell">7</td><td class="score-cell">6</td><td class="score-cell">8</td><td class="score-cell">8</td><td class="score-cell">9</td><td class="score-cell">7</td><td class="score-cell">6</td>
+                        <td class="total-cell">58</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CETECH HVAC-R</strong></td>
+                        <td class="score-cell">7</td><td class="score-cell">6</td><td class="score-cell">6</td><td class="score-cell">8</td><td class="score-cell">9</td><td class="score-cell">4</td><td class="score-cell">8</td><td class="score-cell">6</td>
+                        <td class="total-cell">52</td>
+                    </tr>
+                    <tr class="client-row">
+                        <td><strong>HVAC Technical GH</strong> <em style="color:var(--accent)">(today)</em></td>
+                        <td class="score-cell">3</td><td class="score-cell">2</td><td class="score-cell">3</td><td class="score-cell">4</td><td class="score-cell">2</td><td class="score-cell">1</td><td class="score-cell">3</td><td class="score-cell">4</td>
+                        <td class="total-cell">22</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SEO LANDSCAPE -->
+    <section class="section">
+        <p class="section-eyebrow">SEO Landscape</p>
+        <h2>Keywords <em>nobody owns yet</em></h2>
+        <p>The top operators dominate brand keywords ("daikin dealer ghana") but the long tail is wide open. The redesign should capture these gaps with dedicated pages.</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr><th>Keyword</th><th>Currently Top-Ranking</th><th>Client Opportunity</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>hvac contractor accra</td><td>Fox Cooling, Ideal Air</td><td style="color:var(--accent);font-weight:500;">High</td></tr>
+                    <tr><td>air conditioning installation accra</td><td>PKBA, Electricons</td><td style="color:var(--accent);font-weight:500;">High</td></tr>
+                    <tr><td>vrf installation ghana</td><td>Almost nobody</td><td style="color:var(--accent);font-weight:600;">Highest</td></tr>
+                    <tr><td>commercial hvac maintenance accra</td><td>Prestige, Ideal Air</td><td style="color:var(--accent);font-weight:500;">High</td></tr>
+                    <tr><td>chiller maintenance accra</td><td>Ideal Air</td><td style="color:var(--accent);font-weight:500;">High</td></tr>
+                    <tr><td>industrial cold room ghana</td><td>CETECH</td><td>Medium</td></tr>
+                    <tr><td>hvac mccarthy hill / west legon</td><td>Nobody</td><td style="color:var(--accent);font-weight:600;">Highest (hyper-local)</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- PATTERNS -->
+    <section class="section">
+        <p class="section-eyebrow">Patterns of the Top 10%</p>
+        <h2>Five moves the winners <em>all</em> make</h2>
+
+        <div class="pattern">
+            <div class="pattern-num">01</div>
+            <div>
+                <h3>Marquee project wall above the fold</h3>
+                <p>Fox Cooling leads with Kotoka Airport and Google. Ideal Air leads with Accra Mall and Coca-Cola. Prestige leads with 37 Military Hospital and University of Ghana. In Ghana's B2B HVAC market, project names close deals before a sales call happens. The client's site has none of this.</p>
+            </div>
+        </div>
+
+        <div class="pattern">
+            <div class="pattern-num">02</div>
+            <div>
+                <h3>Manufacturer brand wall</h3>
+                <p>The first question a Ghanaian buyer asks is "what brand do you fit?" Fox = Daikin. Nesstra = Carrier. Prestige = LG, Samsung, Daikin, Midea, Carrier, York, EuroBreez, Jet Air. The answer must be visible in three seconds — a row of manufacturer logos at the top of the homepage.</p>
+            </div>
+        </div>
+
+        <div class="pattern">
+            <div class="pattern-num">03</div>
+            <div>
+                <h3>Industry-specific landing pages</h3>
+                <p>Nesstra has individual pages for mining, oil &amp; gas, food &amp; beverage, construction, data centers. Same engineers, same services — but each page speaks the buyer's language. Five-to-ten times the SEO surface area, and a much stronger sales conversation.</p>
+            </div>
+        </div>
+
+        <div class="pattern">
+            <div class="pattern-num">04</div>
+            <div>
+                <h3>Specific numbers, not adjectives</h3>
+                <p>"20 years" (Prestige). "100+ installations" (Skaia). "Award Winning 2024" (Ideal Air). "Best MEP in Africa" (Fox Cooling). The client's "close to a decade" is too soft. Replace with: <em>"10+ years. 200+ installations. 24-hour callout."</em></p>
+            </div>
+        </div>
+
+        <div class="pattern">
+            <div class="pattern-num">05</div>
+            <div>
+                <h3>Multi-channel contact, zero friction</h3>
+                <p>Phone + WhatsApp + email + booking form all visible in the header on every page. Ideal Air goes further — sales email AND HR email separately. The client currently has no email at all on the contact page, and WhatsApp is the only true CTA. That's a leak.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- RECOMMENDED DIRECTION -->
+    <section class="section">
+        <p class="section-eyebrow">Recommended Design Direction</p>
+        <h2>What we'll build, and <em>why</em></h2>
+
+        <div class="recommend">
+            <strong>Palette</strong>
+            <h3>Deep teal + signal orange</h3>
+            <p>Teal (#0F4C5C) reads as cool air, engineering, water — a fresh space in a market dominated by red (Fox, CETECH) and blue (Ideal Air, Nesstra, Prestige). Signal orange (#F26419) carries the warmth of CTAs and matches Carrier-family expectations without copying anyone.</p>
+            <div class="swatches" style="margin-top:1rem;">
+                <span class="swatch" style="background:#0f4c5c;" data-hex="#0F4C5C"></span>
+                <span class="swatch" style="background:#1b2a41;" data-hex="#1B2A41"></span>
+                <span class="swatch" style="background:#f26419;" data-hex="#F26419"></span>
+                <span class="swatch" style="background:#f6f4f0;" data-hex="#F6F4F0"></span>
+                <span class="swatch" style="background:#0a0a0a;" data-hex="#0A0A0A"></span>
+            </div>
+        </div>
+
+        <div class="recommend">
+            <strong>Typography</strong>
+            <h3>Editorial serif headline + technical sans body</h3>
+            <p>Instrument Serif for hero and section headings — gives the brand a confident, editorial voice that no Ghana HVAC site currently has. DM Sans (or Inter) for body — clean, technical, reads like a spec sheet.</p>
+        </div>
+
+        <div class="recommend">
+            <strong>Structure</strong>
+            <h3>20+ pages, not 3</h3>
+            <p>Home, About, 8 service pages, 5 industry pages, projects index, individual project case studies, brands page, blog, contact. Every page is a search door.</p>
+        </div>
+
+        <div class="recommend">
+            <strong>Animation &amp; 3D</strong>
+            <h3>3D HVAC unit scroll-reveal in the hero</h3>
+            <p>A scroll-triggered 3D split-system unit that disassembles to expose its components as the user scrolls — instantly signals technical depth and visual quality. Backed by GSAP ScrollTrigger transitions, parallax on project photography, and subtle motion on CTAs. Nobody in the Ghana set has this.</p>
+        </div>
+
+        <div class="recommend">
+            <strong>What we will NOT do</strong>
+            <h3>Avoiding the bottom of the market</h3>
+            <p>No stock photography of smiling models pointing at vents. No "we are passionate about cooling" banner copy. No clip-art icons. No carousel-of-everything. No 2015 corporate blue gradient. No emoji checklists. No template look.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>HVAC Technical GH &mdash; Competitive Analysis &mdash; Prepared May 2026</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
